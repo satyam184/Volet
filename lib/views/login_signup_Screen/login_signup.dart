@@ -19,13 +19,11 @@ class _LoginScreenState extends State<LoginSignup> {
   final log = Logger('LoginScreen');
 
   final PageController _pageController = PageController();
-  final ValueNotifier<bool> isChecked = ValueNotifier<bool>(false);
   final ValueNotifier<int> selectedIndex = ValueNotifier<int>(0);
 
   @override
   void dispose() {
     selectedIndex.dispose();
-    isChecked.dispose();
     _pageController.dispose();
     super.dispose();
   }
@@ -124,10 +122,7 @@ class _LoginScreenState extends State<LoginSignup> {
                           onPageChanged: (index) {
                             selectedIndex.value = index;
                           },
-                          children: [
-                            LoginForm(isChecked: isChecked),
-                            SignupForm(),
-                          ],
+                          children: [LoginForm(), SignupForm()],
                         );
                       },
                     ),

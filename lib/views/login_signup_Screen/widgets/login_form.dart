@@ -6,10 +6,21 @@ import 'package:wallet/views/login_signup_Screen/widgets/or.dart';
 import 'package:wallet/views/login_signup_Screen/widgets/remember_me_and_forgot_password.dart';
 import 'package:wallet/views/login_signup_Screen/widgets/text_field_heading.dart';
 
-class LoginForm extends StatelessWidget {
-  const LoginForm({super.key, required this.isChecked});
+class LoginForm extends StatefulWidget {
+  const LoginForm({super.key});
 
-  final ValueNotifier<bool> isChecked;
+  @override
+  State<LoginForm> createState() => _LoginFormState();
+}
+
+class _LoginFormState extends State<LoginForm> {
+  @override
+  void dispose() {
+    isChecked.dispose();
+    super.dispose();
+  }
+
+  final ValueNotifier<bool> isChecked = ValueNotifier<bool>(false);
 
   @override
   Widget build(BuildContext context) {
