@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:wallet/utils/screen_util.dart';
 import 'package:wallet/views/dashBoard/dashboard.dart';
-import 'package:wallet/views/login_screen/login_screen.dart';
+import 'package:wallet/views/login_signup_Screen/login_signup.dart';
 
 void main() {
   runApp(const MyApp());
@@ -35,7 +35,7 @@ class MyApp extends StatelessWidget {
           ),
         ),
       ),
-      home: LoginScreen(),
+      home: LoginSignup(),
     );
   }
 }

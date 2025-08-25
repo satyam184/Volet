@@ -5,14 +5,14 @@ import 'package:wallet/components/custom_toggle_button.dart';
 import 'package:wallet/utils/images.dart';
 import 'package:wallet/utils/screen_util.dart';
 
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({super.key});
+class LoginSignup extends StatefulWidget {
+  const LoginSignup({super.key});
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  State<LoginSignup> createState() => _LoginScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _LoginScreenState extends State<LoginSignup> {
   final log = Logger('LoginScreen');
 
   final PageController _pageController = PageController();
