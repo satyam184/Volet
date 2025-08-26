@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "811862823354",
+    "project_id": "volet-5e728",
+    "storage_bucket": "volet-5e728.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:811862823354:android:43b0a7b30628a967840d83",
+        "android_client_info": {
+          "package_name": "com.example.wallet"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBTCI99mv8CXtx4pTo8M62M2z4O2xAtfdc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

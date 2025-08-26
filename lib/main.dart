@@ -1,16 +1,16 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:logging/logging.dart';
 import 'package:wallet/utils/screen_util.dart';
-import 'package:wallet/views/dashBoard/dashboard.dart';
 import 'package:wallet/views/login_signup_Screen/bloc/login_signup_bloc.dart';
 import 'package:wallet/views/login_signup_Screen/login_signup.dart';
+import 'firebase_options.dart';
 
-void main() {
+void main() async {
   hierarchicalLoggingEnabled = true;
   Logger.root.level = Level.ALL;
-
   Logger.root.onRecord.listen((record) {
     if (kDebugMode) {
       print(
@@ -18,6 +18,10 @@ void main() {
       );
     }
   });
+
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+
   runApp(const MyApp());
 }
 
