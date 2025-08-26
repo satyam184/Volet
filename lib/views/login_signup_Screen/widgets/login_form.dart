@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:wallet/components/snack_bar.dart';
 import 'package:wallet/utils/enums.dart';
 import 'package:wallet/utils/screen_util.dart';
+import 'package:wallet/views/dashBoard/dashboard.dart';
 import 'package:wallet/views/login_signup_Screen/bloc/login_signup_bloc.dart';
 import 'package:wallet/views/login_signup_Screen/widgets/custom_text_field.dart';
 import 'package:wallet/views/login_signup_Screen/widgets/google_button.dart';
@@ -75,13 +76,22 @@ class _LoginFormState extends State<LoginForm> {
               margin: EdgeInsets.only(top: ScreenUtil.height(12)),
               child: Center(
                 child: BlocConsumer<LoginSignupBloc, LoginSignupState>(
+                  listenWhen: (previous, current) =>
+                      previous.loginPostApiStatus != current.loginPostApiStatus,
                   listener: (context, state) {
                     if (state.loginPostApiStatus == LoginPostApiStatus.error) {
                       snackBar(
                         context,
-                        message: "Error Ocurred!",
-                        icon: Icons.check_circle,
+                        message: state.loginError,
+                        icon: Icons.cancel_rounded,
                         backgroundColor: Colors.red,
+                      );
+                    } else if (state.loginPostApiStatus ==
+                        LoginPostApiStatus.success) {
+                      Navigator.pushAndRemoveUntil(
+                        context,
+                        MaterialPageRoute(builder: (context) => Dashboard()),
+                        (route) => false,
                       );
                     }
                   },

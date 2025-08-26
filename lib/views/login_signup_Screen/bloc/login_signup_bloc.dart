@@ -1,5 +1,10 @@
+import 'dart:async';
+import 'dart:io';
+
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:logging/logging.dart';
 import 'package:wallet/utils/enums.dart';
 
@@ -44,10 +49,41 @@ class LoginSignupBloc extends Bloc<LoginSignupEvent, LoginSignupState> {
     Emitter<LoginSignupState> emit,
   ) async {
     emit(state.copyWith(loginPostApiStatus: LoginPostApiStatus.loading));
-    await Future.delayed(const Duration(seconds: 1), () {
-      log.fine('email: ${state.loginEmail}, password: ${state.loginPassword}');
-    });
-    emit(state.copyWith(loginPostApiStatus: LoginPostApiStatus.success));
+    try {
+      await FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: state.loginEmail,
+        password: state.loginPassword,
+      );
+      emit(state.copyWith(loginPostApiStatus: LoginPostApiStatus.success));
+    } on FirebaseAuthException catch (e) {
+      emit(
+        state.copyWith(
+          loginPostApiStatus: LoginPostApiStatus.error,
+          loginError: e.code.replaceAll('-', ' '),
+        ),
+      );
+    } on SocketException {
+      emit(
+        state.copyWith(
+          loginPostApiStatus: LoginPostApiStatus.error,
+          loginError: "No internet connection. Please check your network",
+        ),
+      );
+    } on TimeoutException {
+      emit(
+        state.copyWith(
+          loginPostApiStatus: LoginPostApiStatus.error,
+          loginError: "Request timed out. Try again later",
+        ),
+      );
+    } catch (e) {
+      emit(
+        state.copyWith(
+          loginPostApiStatus: LoginPostApiStatus.error,
+          loginError: "Something went wrong. Please try again.",
+        ),
+      );
+    }
   }
 
   // -------------------- Sign Up --------------------

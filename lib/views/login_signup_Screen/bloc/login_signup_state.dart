@@ -5,6 +5,7 @@ class LoginSignupState extends Equatable {
     this.loginEmail = '',
     this.loginPassword = '',
     this.isLoginPasswordVisible = false,
+    this.loginError = '',
     this.signupFullName = '',
     this.signupEmail = '',
     this.signupPhoneNumber = '',
@@ -17,6 +18,7 @@ class LoginSignupState extends Equatable {
   final String loginEmail;
   final String loginPassword;
   final bool isLoginPasswordVisible;
+  final String loginError;
 
   // ---- Signup fields ----
   final String signupFullName;
@@ -30,6 +32,7 @@ class LoginSignupState extends Equatable {
     String? loginEmail,
     String? loginPassword,
     bool? isLoginPasswordVisible,
+    String? loginError,
     String? signupFullName,
     String? signupEmail,
     String? signupPhoneNumber,
@@ -42,6 +45,7 @@ class LoginSignupState extends Equatable {
       loginPassword: loginPassword ?? this.loginPassword,
       isLoginPasswordVisible:
           isLoginPasswordVisible ?? this.isLoginPasswordVisible,
+      loginError: loginError ?? this.loginError,
       signupFullName: signupFullName ?? this.signupFullName,
       signupEmail: signupEmail ?? this.signupEmail,
       signupPhoneNumber: signupPhoneNumber ?? this.signupPhoneNumber,
@@ -57,6 +61,7 @@ class LoginSignupState extends Equatable {
     loginEmail,
     loginPassword,
     isLoginPasswordVisible,
+    loginError,
     signupFullName,
     signupEmail,
     signupPhoneNumber,
