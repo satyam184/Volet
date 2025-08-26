@@ -7,10 +7,12 @@ class CustomTextField extends StatelessWidget {
     required this.onChanged,
     this.icon,
     this.obsecure = false,
+    this.validator,
   });
   final void Function(String) onChanged;
   final Icon? icon;
   final bool obsecure;
+  final FormFieldValidator<String>? validator;
 
   @override
   Widget build(BuildContext context) {
@@ -18,6 +20,7 @@ class CustomTextField extends StatelessWidget {
       margin: EdgeInsets.only(left: ScreenUtil.width(5)),
       width: ScreenUtil.width(90),
       child: TextFormField(
+        validator: validator,
         obscuringCharacter: '*',
         obscureText: obsecure,
         onChanged: onChanged,
