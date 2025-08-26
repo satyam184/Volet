@@ -53,20 +53,33 @@ class _LoginFormState extends State<LoginForm> {
             ),
             SizedBox(height: ScreenUtil.height(2)),
             TextFieldHeading(text: 'Password'),
-            CustomTextField(
-              validator: (value) {
-                if (value == null || value.trim().isEmpty) {
-                  return 'Please Enter Password';
-                }
-                return null;
-              },
-              onChanged: (value) {
-                context.read<LoginSignupBloc>().add(
-                  OnLoginPasswordChanged(loginPassword: value.trim()),
+            BlocBuilder<LoginSignupBloc, LoginSignupState>(
+              builder: (context, state) {
+                return CustomTextField(
+                  validator: (value) {
+                    if (value == null || value.trim().isEmpty) {
+                      return 'Please Enter Password';
+                    }
+                    return null;
+                  },
+                  onChanged: (value) {
+                    context.read<LoginSignupBloc>().add(
+                      OnLoginPasswordChanged(loginPassword: value.trim()),
+                    );
+                  },
+                  suffixIcon: IconButton(
+                    onPressed: () {
+                      context.read<LoginSignupBloc>().add(
+                        OnLoginPasswordVisible(),
+                      );
+                    },
+                    icon: state.isLoginPasswordVisible
+                        ? Icon(Icons.visibility)
+                        : Icon(Icons.visibility_off),
+                  ),
+                  obsecure: !state.isLoginPasswordVisible,
                 );
               },
-              icon: Icon(Icons.visibility),
-              obsecure: true,
             ),
             RememberMeAndForgotPassword(
               isChecked: isChecked,

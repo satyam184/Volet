@@ -25,14 +25,20 @@ class SignupForm extends StatelessWidget {
           TextFieldHeading(text: 'Password'),
           CustomTextField(
             onChanged: (value) {},
-            icon: Icon(Icons.visibility),
+            suffixIcon: IconButton(
+              onPressed: () {},
+              icon: Icon(Icons.visibility),
+            ),
             obsecure: true,
           ),
           SizedBox(height: ScreenUtil.height(2)),
           TextFieldHeading(text: 'Confirm Password'),
           CustomTextField(
             onChanged: (value) {},
-            icon: Icon(Icons.visibility),
+            // suffixIcon: IconButton(
+            //   onPressed: () {},
+            //   icon: Icon(Icons.visibility),
+            // ),
             obsecure: true,
           ),
           Container(

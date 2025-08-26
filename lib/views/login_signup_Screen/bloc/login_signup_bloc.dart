@@ -16,6 +16,7 @@ class LoginSignupBloc extends Bloc<LoginSignupEvent, LoginSignupState> {
     // Login
     on<OnLoginEmailChanged>(_onLoginEmailChanged);
     on<OnLoginPasswordChanged>(_onLoginPasswordChanged);
+    on<OnLoginPasswordVisible>(_onLoginPasswordVisible);
     on<OnLoginSumbitted>(_onLoginSubmitted);
 
     // Signup
@@ -42,6 +43,13 @@ class LoginSignupBloc extends Bloc<LoginSignupEvent, LoginSignupState> {
     Emitter<LoginSignupState> emit,
   ) {
     emit(state.copyWith(loginPassword: event.loginPassword));
+  }
+
+  void _onLoginPasswordVisible(
+    OnLoginPasswordVisible event,
+    Emitter<LoginSignupState> emit,
+  ) {
+    emit(state.copyWith(isLoginPasswordVisible: !state.isLoginPasswordVisible));
   }
 
   Future<void> _onLoginSubmitted(

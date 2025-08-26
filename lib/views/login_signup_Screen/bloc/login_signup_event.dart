@@ -24,6 +24,8 @@ class OnLoginPasswordChanged extends LoginSignupEvent {
   List<Object> get props => [loginPassword];
 }
 
+class OnLoginPasswordVisible extends LoginSignupEvent {}
+
 class OnLoginSumbitted extends LoginSignupEvent {
   const OnLoginSumbitted();
 }

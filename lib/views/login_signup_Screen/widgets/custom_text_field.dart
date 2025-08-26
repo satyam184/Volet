@@ -5,12 +5,12 @@ class CustomTextField extends StatelessWidget {
   const CustomTextField({
     super.key,
     required this.onChanged,
-    this.icon,
+    this.suffixIcon,
     this.obsecure = false,
     this.validator,
   });
   final void Function(String) onChanged;
-  final Icon? icon;
+  final Widget? suffixIcon;
   final bool obsecure;
   final FormFieldValidator<String>? validator;
 
@@ -26,7 +26,7 @@ class CustomTextField extends StatelessWidget {
         onChanged: onChanged,
         cursorColor: Color(0xFFd5d5de),
         decoration: InputDecoration(
-          suffixIcon: icon,
+          suffixIcon: suffixIcon,
           suffixIconColor: Colors.black,
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10),
