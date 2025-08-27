@@ -90,17 +90,16 @@ class _LoginFormState extends State<LoginForm> {
               child: Center(
                 child: BlocConsumer<LoginSignupBloc, LoginSignupState>(
                   listenWhen: (previous, current) =>
-                      previous.loginPostApiStatus != current.loginPostApiStatus,
+                      previous.postApiStatus != current.postApiStatus,
                   listener: (context, state) {
-                    if (state.loginPostApiStatus == LoginPostApiStatus.error) {
+                    if (state.postApiStatus == PostApiStatus.error) {
                       snackBar(
                         context,
-                        message: state.loginError,
+                        message: state.error,
                         icon: Icons.cancel_rounded,
                         backgroundColor: Colors.red,
                       );
-                    } else if (state.loginPostApiStatus ==
-                        LoginPostApiStatus.success) {
+                    } else if (state.postApiStatus == PostApiStatus.success) {
                       Navigator.pushAndRemoveUntil(
                         context,
                         MaterialPageRoute(builder: (context) => Dashboard()),
@@ -117,8 +116,7 @@ class _LoginFormState extends State<LoginForm> {
                           );
                         }
                       },
-                      child:
-                          state.loginPostApiStatus == LoginPostApiStatus.loading
+                      child: state.postApiStatus == PostApiStatus.loading
                           ? CircularProgressIndicator(
                               color: Colors.white,
                               strokeWidth: 2,

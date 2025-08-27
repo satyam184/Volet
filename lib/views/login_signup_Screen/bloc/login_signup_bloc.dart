@@ -2,9 +2,9 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:bloc/bloc.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:logging/logging.dart';
 import 'package:wallet/utils/enums.dart';
 
@@ -25,6 +25,8 @@ class LoginSignupBloc extends Bloc<LoginSignupEvent, LoginSignupState> {
     on<OnSignUpPhoneChanged>(_onSignUpPhoneChanged);
     on<OnSignUpPasswordChanged>(_onSignUpPasswordChanged);
     on<OnSignUpConfirmPasswordChanged>(_onSignUpConfirmPasswordChanged);
+    on<OnSignUpPasswordVisible>(_onSignUpPasswordVisible);
+    on<OnSignUpConfirmPasswordVisible>(_onSignUpConfirmPasswordVisible);
     on<OnSignUpSubmitted>(_onSignUpSubmitted);
   }
   final log = Logger('LoginSignupBloc');
@@ -56,39 +58,39 @@ class LoginSignupBloc extends Bloc<LoginSignupEvent, LoginSignupState> {
     OnLoginSumbitted event,
     Emitter<LoginSignupState> emit,
   ) async {
-    emit(state.copyWith(loginPostApiStatus: LoginPostApiStatus.loading));
+    emit(state.copyWith(postApiStatus: PostApiStatus.loading));
     try {
       await FirebaseAuth.instance.signInWithEmailAndPassword(
         email: state.loginEmail,
         password: state.loginPassword,
       );
-      emit(state.copyWith(loginPostApiStatus: LoginPostApiStatus.success));
+      emit(state.copyWith(postApiStatus: PostApiStatus.success));
     } on FirebaseAuthException catch (e) {
       emit(
         state.copyWith(
-          loginPostApiStatus: LoginPostApiStatus.error,
-          loginError: e.code.replaceAll('-', ' '),
+          postApiStatus: PostApiStatus.error,
+          error: e.code.replaceAll('-', ' '),
         ),
       );
     } on SocketException {
       emit(
         state.copyWith(
-          loginPostApiStatus: LoginPostApiStatus.error,
-          loginError: "No internet connection. Please check your network",
+          postApiStatus: PostApiStatus.error,
+          error: "No internet connection. Please check your network",
         ),
       );
     } on TimeoutException {
       emit(
         state.copyWith(
-          loginPostApiStatus: LoginPostApiStatus.error,
-          loginError: "Request timed out. Try again later",
+          postApiStatus: PostApiStatus.error,
+          error: "Request timed out. Try again later",
         ),
       );
     } catch (e) {
       emit(
         state.copyWith(
-          loginPostApiStatus: LoginPostApiStatus.error,
-          loginError: "Something went wrong. Please try again.",
+          postApiStatus: PostApiStatus.error,
+          error: "Something went wrong. Please try again.",
         ),
       );
     }
@@ -128,10 +130,67 @@ class LoginSignupBloc extends Bloc<LoginSignupEvent, LoginSignupState> {
     emit(state.copyWith(signupConfirmPassword: event.signupConfirmPassword));
   }
 
-  void _onSignUpSubmitted(
-    OnSignUpSubmitted event,
+  void _onSignUpPasswordVisible(
+    OnSignUpPasswordVisible event,
     Emitter<LoginSignupState> emit,
   ) {
-    // TODO: Add your signup API call or validation here
+    emit(
+      state.copyWith(isSignupPasswordVisible: !state.isSignupPasswordVisible),
+    );
+  }
+
+  void _onSignUpConfirmPasswordVisible(
+    OnSignUpConfirmPasswordVisible event,
+    Emitter<LoginSignupState> emit,
+  ) {
+    emit(
+      state.copyWith(
+        isSignupConfirmPasswordVisible: !state.isSignupConfirmPasswordVisible,
+      ),
+    );
+  }
+
+  Future<void> _onSignUpSubmitted(
+    OnSignUpSubmitted event,
+    Emitter<LoginSignupState> emit,
+  ) async {
+    emit(state.copyWith(postApiStatus: PostApiStatus.loading));
+    try {
+      UserCredential userCredential = await FirebaseAuth.instance
+          .createUserWithEmailAndPassword(
+            email: state.signupEmail,
+            password: state.signupPassword,
+          );
+      FirebaseFirestore.instance
+          .collection('users')
+          .doc(userCredential.user!.uid)
+          .set({
+            'name': state.signupFullName,
+            'email': state.signupEmail,
+            'createdAt': DateTime.now(),
+          });
+      emit(state.copyWith(postApiStatus: PostApiStatus.success));
+    } on FirebaseAuthException catch (e) {
+      emit(
+        state.copyWith(
+          postApiStatus: PostApiStatus.error,
+          error: e.code.replaceAll('-', ' '),
+        ),
+      );
+    } on SocketException {
+      emit(
+        state.copyWith(
+          postApiStatus: PostApiStatus.error,
+          error: "No internet connection. Please check your network",
+        ),
+      );
+    } on TimeoutException {
+      emit(
+        state.copyWith(
+          postApiStatus: PostApiStatus.error,
+          error: "Request timed out. Try again later",
+        ),
+      );
+    }
   }
 }

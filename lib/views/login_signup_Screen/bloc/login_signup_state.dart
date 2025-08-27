@@ -5,20 +5,22 @@ class LoginSignupState extends Equatable {
     this.loginEmail = '',
     this.loginPassword = '',
     this.isLoginPasswordVisible = false,
-    this.loginError = '',
+    this.error = '',
     this.signupFullName = '',
     this.signupEmail = '',
     this.signupPhoneNumber = '',
     this.signupPassword = '',
     this.signupConfirmPassword = '',
-    this.loginPostApiStatus = LoginPostApiStatus.initial,
+    this.isSignupPasswordVisible = false,
+    this.isSignupConfirmPasswordVisible = false,
+    this.postApiStatus = PostApiStatus.initial,
   });
 
   // ---- Login fields ----
   final String loginEmail;
   final String loginPassword;
   final bool isLoginPasswordVisible;
-  final String loginError;
+  final String error;
 
   // ---- Signup fields ----
   final String signupFullName;
@@ -26,33 +28,41 @@ class LoginSignupState extends Equatable {
   final String signupPhoneNumber;
   final String signupPassword;
   final String signupConfirmPassword;
-  final LoginPostApiStatus loginPostApiStatus;
+  final bool isSignupPasswordVisible;
+  final bool isSignupConfirmPasswordVisible;
+  final PostApiStatus postApiStatus;
 
   LoginSignupState copyWith({
     String? loginEmail,
     String? loginPassword,
     bool? isLoginPasswordVisible,
-    String? loginError,
+    String? error,
     String? signupFullName,
     String? signupEmail,
     String? signupPhoneNumber,
     String? signupPassword,
     String? signupConfirmPassword,
-    LoginPostApiStatus? loginPostApiStatus,
+    bool? isSignupPasswordVisible,
+    bool? isSignupConfirmPasswordVisible,
+    PostApiStatus? postApiStatus,
   }) {
     return LoginSignupState(
       loginEmail: loginEmail ?? this.loginEmail,
       loginPassword: loginPassword ?? this.loginPassword,
       isLoginPasswordVisible:
           isLoginPasswordVisible ?? this.isLoginPasswordVisible,
-      loginError: loginError ?? this.loginError,
+      error: error ?? this.error,
       signupFullName: signupFullName ?? this.signupFullName,
       signupEmail: signupEmail ?? this.signupEmail,
       signupPhoneNumber: signupPhoneNumber ?? this.signupPhoneNumber,
       signupPassword: signupPassword ?? this.signupPassword,
       signupConfirmPassword:
           signupConfirmPassword ?? this.signupConfirmPassword,
-      loginPostApiStatus: loginPostApiStatus ?? this.loginPostApiStatus,
+      isSignupPasswordVisible:
+          isSignupPasswordVisible ?? this.isSignupPasswordVisible,
+      isSignupConfirmPasswordVisible:
+          isSignupConfirmPasswordVisible ?? this.isSignupConfirmPasswordVisible,
+      postApiStatus: postApiStatus ?? this.postApiStatus,
     );
   }
 
@@ -61,13 +71,15 @@ class LoginSignupState extends Equatable {
     loginEmail,
     loginPassword,
     isLoginPasswordVisible,
-    loginError,
+    error,
     signupFullName,
     signupEmail,
     signupPhoneNumber,
     signupPassword,
     signupConfirmPassword,
-    loginPostApiStatus,
+    isSignupPasswordVisible,
+    isSignupConfirmPasswordVisible,
+    PostApiStatus,
   ];
 }
 

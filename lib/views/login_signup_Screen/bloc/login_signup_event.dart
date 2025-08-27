@@ -40,7 +40,7 @@ class OnSignUpChanged extends LoginSignupEvent {
 }
 
 class OnSignUpEmailChanged extends LoginSignupEvent {
-  const OnSignUpEmailChanged(this.signupEmail);
+  const OnSignUpEmailChanged({required this.signupEmail});
   final String signupEmail;
 
   @override
@@ -48,7 +48,7 @@ class OnSignUpEmailChanged extends LoginSignupEvent {
 }
 
 class OnSignUpPhoneChanged extends LoginSignupEvent {
-  const OnSignUpPhoneChanged(this.signupPhoneNumber);
+  const OnSignUpPhoneChanged({required this.signupPhoneNumber});
   final String signupPhoneNumber;
 
   @override
@@ -56,7 +56,7 @@ class OnSignUpPhoneChanged extends LoginSignupEvent {
 }
 
 class OnSignUpPasswordChanged extends LoginSignupEvent {
-  const OnSignUpPasswordChanged(this.signupPassword);
+  const OnSignUpPasswordChanged({required this.signupPassword});
   final String signupPassword;
 
   @override
@@ -64,12 +64,16 @@ class OnSignUpPasswordChanged extends LoginSignupEvent {
 }
 
 class OnSignUpConfirmPasswordChanged extends LoginSignupEvent {
-  const OnSignUpConfirmPasswordChanged(this.signupConfirmPassword);
+  const OnSignUpConfirmPasswordChanged({required this.signupConfirmPassword});
   final String signupConfirmPassword;
 
   @override
   List<Object> get props => [signupConfirmPassword];
 }
+
+class OnSignUpPasswordVisible extends LoginSignupEvent {}
+
+class OnSignUpConfirmPasswordVisible extends LoginSignupEvent {}
 
 class OnSignUpSubmitted extends LoginSignupEvent {
   const OnSignUpSubmitted();
