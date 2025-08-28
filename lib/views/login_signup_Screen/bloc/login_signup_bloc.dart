@@ -100,10 +100,14 @@ class LoginSignupBloc extends Bloc<LoginSignupEvent, LoginSignupState> {
     Emitter<LoginSignupState> emit,
   ) async {
     try {
+      // emit(state.copyWith(postApiStatus: PostApiStatus.loading));
+      // log.fine(
+      //   'signupPassword: ${event.signupPassword}, signupConfirmPassword: ${event.signupConfirmPassword}, email: ${event.signupEmail}',
+      // );
       emit(
         state.copyWith(
-          signupPassword: event.signupPassword,
-          signupConfirmPassword: event.signupConfirmPassword,
+          signupPassword: event.signupPassword.trim(),
+          signupConfirmPassword: event.signupConfirmPassword.trim(),
           postApiStatus: PostApiStatus.loading,
         ),
       );

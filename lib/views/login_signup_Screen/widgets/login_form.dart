@@ -23,6 +23,8 @@ class _LoginFormState extends State<LoginForm> {
   @override
   void dispose() {
     isChecked.dispose();
+    emailController.dispose();
+    passwordController.dispose();
     super.dispose();
   }
 

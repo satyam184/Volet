@@ -7,15 +7,36 @@ import 'package:wallet/views/login_signup_Screen/bloc/login_signup_bloc.dart';
 import 'package:wallet/views/login_signup_Screen/widgets/custom_text_field.dart';
 import 'package:wallet/views/login_signup_Screen/widgets/text_field_heading.dart';
 
-class SignupForm extends StatelessWidget {
-  SignupForm({super.key});
+class SignupForm extends StatefulWidget {
+  const SignupForm({super.key});
+
+  @override
+  State<SignupForm> createState() => _SignupFormState();
+}
+
+class _SignupFormState extends State<SignupForm> {
   final GlobalKey<FormState> _signupFormKey = GlobalKey<FormState>();
+
   final TextEditingController nameController = TextEditingController();
+
   final TextEditingController emailController = TextEditingController();
+
   final TextEditingController phoneNumberController = TextEditingController();
+
   final TextEditingController passwordController = TextEditingController();
+
   final TextEditingController confirmPasswordController =
       TextEditingController();
+
+  @override
+  void dispose() {
+    nameController.dispose();
+    emailController.dispose();
+    phoneNumberController.dispose();
+    passwordController.dispose();
+    confirmPasswordController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -56,7 +77,7 @@ class SignupForm extends StatelessWidget {
             SizedBox(height: ScreenUtil.height(2)),
             TextFieldHeading(text: 'Phone Number'),
             CustomTextField(
-              controller: passwordController,
+              controller: phoneNumberController,
               validator: (value) {
                 if (value == null || value.isEmpty) {
                   return 'Please enter phone number';
@@ -107,10 +128,6 @@ class SignupForm extends StatelessWidget {
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return "Please enter confirm password";
-                    } else if (state.signupPassword.isEmpty) {
-                      return "Please enter password first";
-                    } else if (value.trim() != state.signupPassword.trim()) {
-                      return "Passwords do not match";
                     } else {
                       return null;
                     }
@@ -133,22 +150,20 @@ class SignupForm extends StatelessWidget {
               listenWhen: (previous, current) =>
                   previous.postApiStatus != current.postApiStatus,
               listener: (context, state) {
-                if (state.postApiStatus == PostApiStatus.loading) {
-                  if (state.postApiStatus == PostApiStatus.error) {
-                    snackBar(
-                      context,
-                      message: state.error,
-                      icon: Icons.cancel_rounded,
-                      backgroundColor: Colors.red,
-                    );
-                  } else if (state.postApiStatus == PostApiStatus.success) {
-                    snackBar(
-                      context,
-                      message: 'Created Account Successfully',
-                      icon: Icons.check_rounded,
-                      backgroundColor: Colors.greenAccent,
-                    );
-                  }
+                if (state.postApiStatus == PostApiStatus.error) {
+                  snackBar(
+                    context,
+                    message: state.error,
+                    icon: Icons.cancel_rounded,
+                    backgroundColor: Colors.red,
+                  );
+                } else if (state.postApiStatus == PostApiStatus.success) {
+                  snackBar(
+                    context,
+                    message: 'Created Account Successfully',
+                    icon: Icons.check_circle_rounded,
+                    backgroundColor: Colors.green,
+                  );
                 }
               },
               builder: (context, state) {
