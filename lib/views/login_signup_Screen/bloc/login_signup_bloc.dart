@@ -5,6 +5,7 @@ import 'package:bloc/bloc.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:logging/logging.dart';
 import 'package:wallet/utils/enums.dart';
 
@@ -21,6 +22,7 @@ class LoginSignupBloc extends Bloc<LoginSignupEvent, LoginSignupState> {
     on<OnSignUpPasswordVisible>(_onSignUpPasswordVisible);
     on<OnSignUpConfirmPasswordVisible>(_onSignUpConfirmPasswordVisible);
     on<OnSignUpSubmitted>(_onSignUpSubmitted);
+    on<OnGoogleSignIn>(_onGoogleSignIn);
   }
   final log = Logger('LoginSignupBloc');
 
@@ -72,6 +74,16 @@ class LoginSignupBloc extends Bloc<LoginSignupEvent, LoginSignupState> {
         ),
       );
     }
+  }
+
+  Future<void> _onGoogleSignIn(
+    OnGoogleSignIn event,
+    Emitter<LoginSignupState> emit,
+  ) async {
+    try {
+      emit(state.copyWith(postApiStatus: PostApiStatus.loading));
+      // final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+    } catch (e) {}
   }
 
   // -------------------- Sign Up --------------------

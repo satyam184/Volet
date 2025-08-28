@@ -41,3 +41,5 @@ class OnSignUpSubmitted extends LoginSignupEvent {
   final String signupPassword;
   final String signupConfirmPassword;
 }
+
+class OnGoogleSignIn extends LoginSignupEvent {}
