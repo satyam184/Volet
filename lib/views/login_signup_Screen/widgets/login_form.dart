@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:logging/logging.dart';
 import 'package:wallet/components/snack_bar.dart';
 import 'package:wallet/utils/enums.dart';
 import 'package:wallet/utils/screen_util.dart';
@@ -27,6 +28,9 @@ class _LoginFormState extends State<LoginForm> {
 
   final ValueNotifier<bool> isChecked = ValueNotifier<bool>(false);
   final GlobalKey<FormState> _loginFormKey = GlobalKey<FormState>();
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+  final log = Logger('Login Form');
 
   @override
   Widget build(BuildContext context) {
@@ -45,11 +49,7 @@ class _LoginFormState extends State<LoginForm> {
                 }
                 return null;
               },
-              onChanged: (value) {
-                context.read<LoginSignupBloc>().add(
-                  OnLoginEmailChanged(loginEmail: value.trim()),
-                );
-              },
+              controller: emailController,
             ),
             SizedBox(height: ScreenUtil.height(2)),
             TextFieldHeading(text: 'Password'),
@@ -62,11 +62,7 @@ class _LoginFormState extends State<LoginForm> {
                     }
                     return null;
                   },
-                  onChanged: (value) {
-                    context.read<LoginSignupBloc>().add(
-                      OnLoginPasswordChanged(loginPassword: value.trim()),
-                    );
-                  },
+                  controller: passwordController,
                   suffixIcon: IconButton(
                     onPressed: () {
                       context.read<LoginSignupBloc>().add(
@@ -92,6 +88,9 @@ class _LoginFormState extends State<LoginForm> {
                   listenWhen: (previous, current) =>
                       previous.postApiStatus != current.postApiStatus,
                   listener: (context, state) {
+                    log.fine(
+                      'Listener called with status: ${state.postApiStatus}',
+                    );
                     if (state.postApiStatus == PostApiStatus.error) {
                       snackBar(
                         context,
@@ -100,6 +99,7 @@ class _LoginFormState extends State<LoginForm> {
                         backgroundColor: Colors.red,
                       );
                     } else if (state.postApiStatus == PostApiStatus.success) {
+                      log.fine('Success block reached');
                       Navigator.pushAndRemoveUntil(
                         context,
                         MaterialPageRoute(builder: (context) => Dashboard()),
@@ -112,7 +112,10 @@ class _LoginFormState extends State<LoginForm> {
                       onPressed: () {
                         if (_loginFormKey.currentState!.validate()) {
                           context.read<LoginSignupBloc>().add(
-                            OnLoginSumbitted(),
+                            OnLoginSumbitted(
+                              loginEmail: emailController.text,
+                              loginPassword: passwordController.text,
+                            ),
                           );
                         }
                       },

@@ -4,15 +4,17 @@ import 'package:wallet/utils/screen_util.dart';
 class CustomTextField extends StatelessWidget {
   const CustomTextField({
     super.key,
-    required this.onChanged,
+    // required this.onChanged,
     this.suffixIcon,
     this.obsecure = false,
     this.validator,
+    required this.controller,
   });
-  final void Function(String) onChanged;
-  final Widget? suffixIcon;
+  // final void Function(String) onChanged;
+  final IconButton? suffixIcon;
   final bool obsecure;
   final FormFieldValidator<String>? validator;
+  final TextEditingController controller;
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +25,8 @@ class CustomTextField extends StatelessWidget {
         validator: validator,
         obscuringCharacter: '*',
         obscureText: obsecure,
-        onChanged: onChanged,
+        // onChanged: onChanged,
+        controller: controller,
         cursorColor: Color(0xFFd5d5de),
         decoration: InputDecoration(
           suffixIcon: suffixIcon,

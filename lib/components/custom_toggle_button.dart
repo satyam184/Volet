@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
-class CustomToggleButton extends StatelessWidget {
-  CustomToggleButton({
+class CustomToggleButton extends StatefulWidget {
+  const CustomToggleButton({
+    super.key,
     required this.onTabSelected,
     required this.tabs,
     required this.grayContainerRadius,
@@ -9,8 +10,6 @@ class CustomToggleButton extends StatelessWidget {
     required this.activeTextColor,
     required this.borderRadius,
     required this.backgroundColor,
-
-    super.key,
     required this.selectedIndex,
   }) : assert(tabs.length >= 2, 'At least 2 tabs are required');
 
@@ -21,7 +20,20 @@ class CustomToggleButton extends StatelessWidget {
   final double borderRadius;
   final Color backgroundColor;
   final double grayContainerRadius;
-  int selectedIndex;
+  final int selectedIndex;
+
+  @override
+  State<CustomToggleButton> createState() => _CustomToggleButtonState();
+}
+
+class _CustomToggleButtonState extends State<CustomToggleButton> {
+  late int _selectedIndex;
+
+  @override
+  void initState() {
+    super.initState();
+    _selectedIndex = widget.selectedIndex;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -29,49 +41,50 @@ class CustomToggleButton extends StatelessWidget {
       padding: const EdgeInsets.all(10),
       child: LayoutBuilder(
         builder: (context, constraints) {
-          final tabWidth = constraints.maxWidth / tabs.length;
+          final tabWidth = constraints.maxWidth / widget.tabs.length;
 
           return Container(
             padding: const EdgeInsets.all(3),
             decoration: BoxDecoration(
-              color: backgroundColor,
-              borderRadius: BorderRadius.circular(grayContainerRadius),
+              color: widget.backgroundColor,
+              borderRadius: BorderRadius.circular(widget.grayContainerRadius),
             ),
             child: Stack(
               children: [
                 AnimatedPositioned(
                   duration: const Duration(milliseconds: 300),
                   curve: Curves.easeInOut,
-                  left: selectedIndex * tabWidth,
+                  left: _selectedIndex * tabWidth,
                   child: Container(
                     width: tabWidth,
                     height: 40,
                     decoration: BoxDecoration(
-                      color: activeTabColor,
-                      borderRadius: BorderRadius.circular(borderRadius),
+                      color: widget.activeTabColor,
+                      borderRadius: BorderRadius.circular(widget.borderRadius),
                     ),
                   ),
                 ),
 
-                // Row of tabs
                 Row(
                   children: List.generate(
-                    tabs.length,
+                    widget.tabs.length,
                     (index) => Expanded(
                       child: GestureDetector(
                         onTap: () {
-                          selectedIndex = index;
-                          onTabSelected(index);
+                          setState(() {
+                            _selectedIndex = index;
+                          });
+                          widget.onTabSelected(index);
                         },
                         child: Container(
                           height: 40,
                           alignment: Alignment.center,
                           child: Text(
-                            tabs[index],
+                            widget.tabs[index],
                             style: TextStyle(
                               fontSize: 15,
-                              color: selectedIndex == index
-                                  ? activeTextColor
+                              color: _selectedIndex == index
+                                  ? widget.activeTextColor
                                   : const Color(0xFF7D7D91),
                               fontWeight: FontWeight.w500,
                             ),

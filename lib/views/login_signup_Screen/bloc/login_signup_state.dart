@@ -79,7 +79,7 @@ class LoginSignupState extends Equatable {
     signupConfirmPassword,
     isSignupPasswordVisible,
     isSignupConfirmPasswordVisible,
-    PostApiStatus,
+    postApiStatus,
   ];
 }
 

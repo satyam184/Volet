@@ -10,6 +10,12 @@ import 'package:wallet/views/login_signup_Screen/widgets/text_field_heading.dart
 class SignupForm extends StatelessWidget {
   SignupForm({super.key});
   final GlobalKey<FormState> _signupFormKey = GlobalKey<FormState>();
+  final TextEditingController nameController = TextEditingController();
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController phoneNumberController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+  final TextEditingController confirmPasswordController =
+      TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -22,11 +28,12 @@ class SignupForm extends StatelessWidget {
             SizedBox(height: ScreenUtil.height(3)),
             TextFieldHeading(text: 'Full Name'),
             CustomTextField(
-              onChanged: (value) {
-                context.read<LoginSignupBloc>().add(
-                  OnSignUpChanged(signupFullName: value.trim()),
-                );
-              },
+              // onChanged: (value) {
+              //   context.read<LoginSignupBloc>().add(
+              //     OnSignUpChanged(signupFullName: value.trim()),
+              //   );
+              // },
+              controller: nameController,
               validator: (value) {
                 if (value == null || value.trim().isEmpty) {
                   return 'Please enter your name';
@@ -39,11 +46,12 @@ class SignupForm extends StatelessWidget {
             SizedBox(height: ScreenUtil.height(2)),
             TextFieldHeading(text: 'Email'),
             CustomTextField(
-              onChanged: (value) {
-                context.read<LoginSignupBloc>().add(
-                  OnSignUpEmailChanged(signupEmail: value.trim()),
-                );
-              },
+              // onChanged: (value) {
+              //   context.read<LoginSignupBloc>().add(
+              //     OnSignUpEmailChanged(signupEmail: value.trim()),
+              //   );
+              // },
+              controller: emailController,
               validator: (value) {
                 if (value == null || value.trim().isEmpty) {
                   return 'Please enter email';
@@ -58,11 +66,12 @@ class SignupForm extends StatelessWidget {
             SizedBox(height: ScreenUtil.height(2)),
             TextFieldHeading(text: 'Phone Number'),
             CustomTextField(
-              onChanged: (value) {
-                context.read<LoginSignupBloc>().add(
-                  OnSignUpPhoneChanged(signupPhoneNumber: value.trim()),
-                );
-              },
+              // onChanged: (value) {
+              //   context.read<LoginSignupBloc>().add(
+              //     OnSignUpPhoneChanged(signupPhoneNumber: value.trim()),
+              //   );
+              // },
+              controller: passwordController,
               validator: (value) {
                 if (value == null || value.isEmpty) {
                   return 'Please enter phone number';
@@ -77,11 +86,12 @@ class SignupForm extends StatelessWidget {
             BlocBuilder<LoginSignupBloc, LoginSignupState>(
               builder: (context, state) {
                 return CustomTextField(
-                  onChanged: (value) {
-                    context.read<LoginSignupBloc>().add(
-                      OnSignUpPasswordChanged(signupPassword: value.trim()),
-                    );
-                  },
+                  // onChanged: (value) {
+                  //   context.read<LoginSignupBloc>().add(
+                  //     OnSignUpPasswordChanged(signupPassword: value.trim()),
+                  //   );
+                  // },
+                  controller: passwordController,
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return 'Please enter password';
@@ -113,13 +123,14 @@ class SignupForm extends StatelessWidget {
             BlocBuilder<LoginSignupBloc, LoginSignupState>(
               builder: (context, state) {
                 return CustomTextField(
-                  onChanged: (value) {
-                    context.read<LoginSignupBloc>().add(
-                      OnSignUpConfirmPasswordChanged(
-                        signupConfirmPassword: value.trim(),
-                      ),
-                    );
-                  },
+                  // onChanged: (value) {
+                  //   context.read<LoginSignupBloc>().add(
+                  //     OnSignUpConfirmPasswordChanged(
+                  //       signupConfirmPassword: value.trim(),
+                  //     ),
+                  //   );
+                  // },
+                  controller: confirmPasswordController,
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return "Please enter confirm password";
@@ -175,7 +186,14 @@ class SignupForm extends StatelessWidget {
                       onPressed: () {
                         if (_signupFormKey.currentState!.validate()) {
                           context.read<LoginSignupBloc>().add(
-                            OnSignUpSubmitted(),
+                            OnSignUpSubmitted(
+                              signupFullName: nameController.text,
+                              signupEmail: emailController.text,
+                              signupPhoneNumber: phoneNumberController.text,
+                              signupPassword: passwordController.text,
+                              signupConfirmPassword:
+                                  confirmPasswordController.text,
+                            ),
                           );
                         }
                       },

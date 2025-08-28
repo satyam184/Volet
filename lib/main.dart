@@ -12,6 +12,7 @@ import 'package:wallet/views/login_signup_Screen/widgets/signup_form.dart';
 import 'firebase_options.dart';
 
 void main() async {
+  debugProfileBuildsEnabled = true;
   hierarchicalLoggingEnabled = true;
   Logger.root.level = Level.ALL;
   Logger.root.onRecord.listen((record) {
@@ -32,7 +33,6 @@ class MyApp extends StatelessWidget {
   const MyApp({super.key});
   @override
   Widget build(BuildContext context) {
-    debugPrint("inside of myApp");
     ScreenUtil.init(context);
     return MultiBlocProvider(
       providers: [BlocProvider(create: (context) => LoginSignupBloc())],

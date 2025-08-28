@@ -31,6 +31,7 @@ class _LoginScreenState extends State<LoginSignup> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      // resizeToAvoidBottomInset: false,
       appBar: AppBar(
         titleSpacing: 0,
         backgroundColor: const Color(0xFF20202D),
