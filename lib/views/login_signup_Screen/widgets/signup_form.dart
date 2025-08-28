@@ -158,7 +158,12 @@ class SignupForm extends StatelessWidget {
                       backgroundColor: Colors.red,
                     );
                   } else if (state.postApiStatus == PostApiStatus.success) {
-                    Navigator.pop(context);
+                    snackBar(
+                      context,
+                      message: 'Created Account Successfully',
+                      icon: Icons.check_rounded,
+                      backgroundColor: Colors.greenAccent,
+                    );
                   }
                 }
               },
