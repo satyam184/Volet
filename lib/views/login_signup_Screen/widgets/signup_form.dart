@@ -28,11 +28,6 @@ class SignupForm extends StatelessWidget {
             SizedBox(height: ScreenUtil.height(3)),
             TextFieldHeading(text: 'Full Name'),
             CustomTextField(
-              // onChanged: (value) {
-              //   context.read<LoginSignupBloc>().add(
-              //     OnSignUpChanged(signupFullName: value.trim()),
-              //   );
-              // },
               controller: nameController,
               validator: (value) {
                 if (value == null || value.trim().isEmpty) {
@@ -46,11 +41,6 @@ class SignupForm extends StatelessWidget {
             SizedBox(height: ScreenUtil.height(2)),
             TextFieldHeading(text: 'Email'),
             CustomTextField(
-              // onChanged: (value) {
-              //   context.read<LoginSignupBloc>().add(
-              //     OnSignUpEmailChanged(signupEmail: value.trim()),
-              //   );
-              // },
               controller: emailController,
               validator: (value) {
                 if (value == null || value.trim().isEmpty) {
@@ -66,11 +56,6 @@ class SignupForm extends StatelessWidget {
             SizedBox(height: ScreenUtil.height(2)),
             TextFieldHeading(text: 'Phone Number'),
             CustomTextField(
-              // onChanged: (value) {
-              //   context.read<LoginSignupBloc>().add(
-              //     OnSignUpPhoneChanged(signupPhoneNumber: value.trim()),
-              //   );
-              // },
               controller: passwordController,
               validator: (value) {
                 if (value == null || value.isEmpty) {
@@ -86,11 +71,6 @@ class SignupForm extends StatelessWidget {
             BlocBuilder<LoginSignupBloc, LoginSignupState>(
               builder: (context, state) {
                 return CustomTextField(
-                  // onChanged: (value) {
-                  //   context.read<LoginSignupBloc>().add(
-                  //     OnSignUpPasswordChanged(signupPassword: value.trim()),
-                  //   );
-                  // },
                   controller: passwordController,
                   validator: (value) {
                     if (value == null || value.isEmpty) {
@@ -123,13 +103,6 @@ class SignupForm extends StatelessWidget {
             BlocBuilder<LoginSignupBloc, LoginSignupState>(
               builder: (context, state) {
                 return CustomTextField(
-                  // onChanged: (value) {
-                  //   context.read<LoginSignupBloc>().add(
-                  //     OnSignUpConfirmPasswordChanged(
-                  //       signupConfirmPassword: value.trim(),
-                  //     ),
-                  //   );
-                  // },
                   controller: confirmPasswordController,
                   validator: (value) {
                     if (value == null || value.isEmpty) {

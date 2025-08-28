@@ -88,9 +88,6 @@ class _LoginFormState extends State<LoginForm> {
                   listenWhen: (previous, current) =>
                       previous.postApiStatus != current.postApiStatus,
                   listener: (context, state) {
-                    log.fine(
-                      'Listener called with status: ${state.postApiStatus}',
-                    );
                     if (state.postApiStatus == PostApiStatus.error) {
                       snackBar(
                         context,
@@ -99,7 +96,6 @@ class _LoginFormState extends State<LoginForm> {
                         backgroundColor: Colors.red,
                       );
                     } else if (state.postApiStatus == PostApiStatus.success) {
-                      log.fine('Success block reached');
                       Navigator.pushAndRemoveUntil(
                         context,
                         MaterialPageRoute(builder: (context) => Dashboard()),
