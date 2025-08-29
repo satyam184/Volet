@@ -133,7 +133,47 @@ class _LoginFormState extends State<LoginForm> {
               ),
             ),
             Or(),
-            Center(child: GoogleButton(onPressed: () {})),
+            BlocConsumer<LoginSignupBloc, LoginSignupState>(
+              listenWhen: (previous, current) =>
+                  previous.postApiStatus != current.postApiStatus,
+              listener: (context, state) {
+                if (state.postApiStatus == PostApiStatus.error) {
+                  snackBar(
+                    context,
+                    message: state.error,
+                    icon: Icons.cancel_rounded,
+                    backgroundColor: Colors.red,
+                  );
+                }
+                if (state.postApiStatus == PostApiStatus.success) {
+                  Navigator.pushAndRemoveUntil(
+                    context,
+                    MaterialPageRoute(builder: (context) => Dashboard()),
+                    (route) => false,
+                  );
+                }
+              },
+              builder: (context, state) {
+                return Center(
+                  child: state.postApiStatus == PostApiStatus.loading
+                      ? CircularProgressIndicator(
+                          color: Colors.blue,
+                          strokeWidth: 2,
+                          constraints: BoxConstraints(
+                            minHeight: ScreenUtil.height(2),
+                            minWidth: ScreenUtil.height(2),
+                          ),
+                        )
+                      : GoogleButton(
+                          onPressed: () {
+                            context.read<LoginSignupBloc>().add(
+                              OnGoogleSignIn(),
+                            );
+                          },
+                        ),
+                );
+              },
+            ),
           ],
         ),
       ),

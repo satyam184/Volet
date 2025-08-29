@@ -82,8 +82,32 @@ class LoginSignupBloc extends Bloc<LoginSignupEvent, LoginSignupState> {
   ) async {
     try {
       emit(state.copyWith(postApiStatus: PostApiStatus.loading));
-      // final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
-    } catch (e) {}
+      await GoogleSignIn.instance.initialize(
+        serverClientId:
+            '811862823354-6vd7pbvbu1c6rp0g9fmon5tb1fg37rtt.apps.googleusercontent.com',
+      );
+      final GoogleSignInAccount googleUser = await GoogleSignIn.instance
+          .authenticate();
+      final GoogleSignInAuthentication googleAuth = googleUser.authentication;
+      final credential = GoogleAuthProvider.credential(
+        idToken: googleAuth.idToken,
+      );
+      await FirebaseAuth.instance.signInWithCredential(credential);
+      emit(state.copyWith(postApiStatus: PostApiStatus.success));
+    } on FirebaseAuthException catch (e) {
+      emit(
+        state.copyWith(
+          postApiStatus: PostApiStatus.error,
+          error: e.code.replaceAll('-', ''),
+        ),
+      );
+      log.fine('error firbaseAuth: ${e.code}');
+    } on Exception catch (e) {
+      emit(
+        state.copyWith(postApiStatus: PostApiStatus.error, error: e.toString()),
+      );
+      log.fine('error firbaseAuth: $e');
+    }
   }
 
   // -------------------- Sign Up --------------------
