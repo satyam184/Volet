@@ -117,7 +117,8 @@ class _LoginFormState extends State<LoginForm> {
                           );
                         }
                       },
-                      child: state.postApiStatus == PostApiStatus.loading
+                      child:
+                          state.googleSignInStatus == GoogleSignInStatus.loading
                           ? CircularProgressIndicator(
                               color: Colors.white,
                               strokeWidth: 2,
@@ -135,9 +136,9 @@ class _LoginFormState extends State<LoginForm> {
             Or(),
             BlocConsumer<LoginSignupBloc, LoginSignupState>(
               listenWhen: (previous, current) =>
-                  previous.postApiStatus != current.postApiStatus,
+                  previous.googleSignInStatus != current.googleSignInStatus,
               listener: (context, state) {
-                if (state.postApiStatus == PostApiStatus.error) {
+                if (state.googleSignInStatus == GoogleSignInStatus.error) {
                   snackBar(
                     context,
                     message: state.error,
@@ -145,7 +146,7 @@ class _LoginFormState extends State<LoginForm> {
                     backgroundColor: Colors.red,
                   );
                 }
-                if (state.postApiStatus == PostApiStatus.success) {
+                if (state.googleSignInStatus == GoogleSignInStatus.success) {
                   Navigator.pushAndRemoveUntil(
                     context,
                     MaterialPageRoute(builder: (context) => Dashboard()),
@@ -155,7 +156,7 @@ class _LoginFormState extends State<LoginForm> {
               },
               builder: (context, state) {
                 return Center(
-                  child: state.postApiStatus == PostApiStatus.loading
+                  child: state.googleSignInStatus == GoogleSignInStatus.loading
                       ? CircularProgressIndicator(
                           color: Colors.blue,
                           strokeWidth: 2,

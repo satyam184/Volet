@@ -4,6 +4,7 @@ class LoginSignupState extends Equatable {
   const LoginSignupState({
     this.isLoginPasswordVisible = false,
     this.error = '',
+    this.googleSignInStatus = GoogleSignInStatus.initial,
     this.signupPassword = '',
     this.signupConfirmPassword = '',
     this.isSignupPasswordVisible = false,
@@ -14,6 +15,7 @@ class LoginSignupState extends Equatable {
   // ---- Login fields ----
   final bool isLoginPasswordVisible;
   final String error;
+  final GoogleSignInStatus googleSignInStatus;
 
   // ---- Signup fields ----
   final String signupPassword;
@@ -23,10 +25,9 @@ class LoginSignupState extends Equatable {
   final PostApiStatus postApiStatus;
 
   LoginSignupState copyWith({
-    String? loginEmail,
-    String? loginPassword,
     bool? isLoginPasswordVisible,
     String? error,
+    GoogleSignInStatus? googleSignInStatus,
     String? signupPassword,
     String? signupConfirmPassword,
     bool? isSignupPasswordVisible,
@@ -37,6 +38,7 @@ class LoginSignupState extends Equatable {
       isLoginPasswordVisible:
           isLoginPasswordVisible ?? this.isLoginPasswordVisible,
       error: error ?? this.error,
+      googleSignInStatus: googleSignInStatus ?? this.googleSignInStatus,
       signupPassword: signupPassword ?? this.signupPassword,
       signupConfirmPassword:
           signupConfirmPassword ?? this.signupConfirmPassword,
@@ -52,6 +54,7 @@ class LoginSignupState extends Equatable {
   List<Object?> get props => [
     isLoginPasswordVisible,
     error,
+    googleSignInStatus,
     signupPassword,
     signupConfirmPassword,
     isSignupPasswordVisible,

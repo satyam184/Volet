@@ -81,7 +81,7 @@ class LoginSignupBloc extends Bloc<LoginSignupEvent, LoginSignupState> {
     Emitter<LoginSignupState> emit,
   ) async {
     try {
-      emit(state.copyWith(postApiStatus: PostApiStatus.loading));
+      emit(state.copyWith(googleSignInStatus: GoogleSignInStatus.loading));
       await GoogleSignIn.instance.initialize(
         serverClientId:
             '811862823354-6vd7pbvbu1c6rp0g9fmon5tb1fg37rtt.apps.googleusercontent.com',
@@ -93,20 +93,22 @@ class LoginSignupBloc extends Bloc<LoginSignupEvent, LoginSignupState> {
         idToken: googleAuth.idToken,
       );
       await FirebaseAuth.instance.signInWithCredential(credential);
-      emit(state.copyWith(postApiStatus: PostApiStatus.success));
+      emit(state.copyWith(googleSignInStatus: GoogleSignInStatus.success));
     } on FirebaseAuthException catch (e) {
       emit(
         state.copyWith(
-          postApiStatus: PostApiStatus.error,
+          googleSignInStatus: GoogleSignInStatus.error,
           error: e.code.replaceAll('-', ''),
         ),
       );
       log.fine('error firbaseAuth: ${e.code}');
     } on Exception catch (e) {
       emit(
-        state.copyWith(postApiStatus: PostApiStatus.error, error: e.toString()),
+        state.copyWith(
+          googleSignInStatus: GoogleSignInStatus.error,
+          error: e.toString(),
+        ),
       );
-      log.fine('error firbaseAuth: $e');
     }
   }
 
