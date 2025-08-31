@@ -7,20 +7,6 @@ class Dashboard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: ElevatedButton(
-          onPressed: () {
-            snackBar(
-              context,
-              message: "Data saved successfully!",
-              icon: Icons.check_circle,
-              backgroundColor: Colors.green,
-            );
-          },
-          child: Text("Show Snackbar"),
-        ),
-      ),
-    );
+    return Scaffold(appBar: AppBar());
   }
 }

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:logging/logging.dart';
 import 'package:wallet/utils/screen_util.dart';
+import 'package:wallet/views/dashBoard/dashboard.dart';
 import 'package:wallet/views/login_signup_Screen/bloc/login_signup_bloc.dart';
 import 'package:wallet/views/login_signup_Screen/login_signup.dart';
 import 'firebase_options.dart';
@@ -56,7 +57,7 @@ class MyApp extends StatelessWidget {
             ),
           ),
         ),
-        home: LoginSignup(),
+        home: Dashboard(),
       ),
     );
   }
