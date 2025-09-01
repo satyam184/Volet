@@ -10,6 +10,9 @@ class LoginSignupState extends Equatable {
     this.isSignupPasswordVisible = false,
     this.isSignupConfirmPasswordVisible = false,
     this.postApiStatus = PostApiStatus.initial,
+    this.photoUrl = '',
+    this.email = '',
+    this.name = '',
   });
 
   // ---- Login fields ----
@@ -24,6 +27,10 @@ class LoginSignupState extends Equatable {
   final bool isSignupConfirmPasswordVisible;
   final PostApiStatus postApiStatus;
 
+  final String photoUrl;
+  final String email;
+  final String name;
+
   LoginSignupState copyWith({
     bool? isLoginPasswordVisible,
     String? error,
@@ -33,6 +40,9 @@ class LoginSignupState extends Equatable {
     bool? isSignupPasswordVisible,
     bool? isSignupConfirmPasswordVisible,
     PostApiStatus? postApiStatus,
+    String? photoUrl,
+    String? email,
+    String? name,
   }) {
     return LoginSignupState(
       isLoginPasswordVisible:
@@ -47,6 +57,9 @@ class LoginSignupState extends Equatable {
       isSignupConfirmPasswordVisible:
           isSignupConfirmPasswordVisible ?? this.isSignupConfirmPasswordVisible,
       postApiStatus: postApiStatus ?? this.postApiStatus,
+      photoUrl: photoUrl ?? this.photoUrl,
+      email: email ?? this.email,
+      name: name ?? this.name,
     );
   }
 
@@ -60,6 +73,9 @@ class LoginSignupState extends Equatable {
     isSignupPasswordVisible,
     isSignupConfirmPasswordVisible,
     postApiStatus,
+    photoUrl,
+    name,
+    email,
   ];
 }
 

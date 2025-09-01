@@ -40,6 +40,29 @@ class OnSignUpSubmitted extends LoginSignupEvent {
   final String signupPhoneNumber;
   final String signupPassword;
   final String signupConfirmPassword;
+
+  @override
+  List<Object> get props => [
+    signupFullName,
+    signupEmail,
+    signupPhoneNumber,
+    signupPassword,
+    signupConfirmPassword,
+  ];
 }
 
 class OnGoogleSignIn extends LoginSignupEvent {}
+
+class OnExtractDetails extends LoginSignupEvent {
+  const OnExtractDetails({
+    required this.photoUrl,
+    required this.email,
+    required this.name,
+  });
+  final String photoUrl;
+  final String email;
+  final String name;
+
+  @override
+  List<Object> get props => [photoUrl, email, name];
+}

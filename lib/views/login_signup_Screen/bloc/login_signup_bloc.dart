@@ -93,7 +93,14 @@ class LoginSignupBloc extends Bloc<LoginSignupEvent, LoginSignupState> {
         idToken: googleAuth.idToken,
       );
       await FirebaseAuth.instance.signInWithCredential(credential);
-      emit(state.copyWith(googleSignInStatus: GoogleSignInStatus.success));
+      emit(
+        state.copyWith(
+          googleSignInStatus: GoogleSignInStatus.success,
+          photoUrl: googleUser.photoUrl ?? '',
+          email: googleUser.email,
+          name: googleUser.displayName,
+        ),
+      );
     } on FirebaseAuthException catch (e) {
       emit(
         state.copyWith(
