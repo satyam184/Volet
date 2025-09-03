@@ -27,39 +27,63 @@ class Dashboard extends StatelessWidget {
             ),
             actions: [CircleAvatar()],
           ),
-          SliverList(
-            delegate: SliverChildBuilderDelegate((context, index) {
-              return Container(
-                decoration: BoxDecoration(
-                  color: Color(0xFF305DB7),
-                  borderRadius: BorderRadius.circular(5),
-                ),
-                child: Row(
-                  children: [
-                    CircleAvatar(
-                      backgroundColor: Colors.white,
-                      radius: ScreenUtil.height(4),
-                    ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: [
-                        Text('Total Spends'),
-                        Text(
-                          '15000',
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 20,
+          SliverPadding(
+            padding: EdgeInsets.all(10),
+            sliver: SliverGrid(
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+                mainAxisSpacing: 10,
+                crossAxisSpacing: 10,
+                childAspectRatio: 2,
+              ),
+              delegate: SliverChildBuilderDelegate((context, index) {
+                return Container(
+                  decoration: BoxDecoration(
+                    color: Color(0xFFb7d0ff),
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      CircleAvatar(radius: ScreenUtil.width(7)),
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Total Spends',
+                            style: TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w500,
+                            ),
                           ),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              );
-            }, childCount: 2),
+                          Text(
+                            '15000',
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 20,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                );
+              }, childCount: 3),
+            ),
           ),
         ],
       ),
+      floatingActionButton: FloatingActionButton.extended(
+        onPressed: () {},
+        label: Text('Create Wallet', style: TextStyle(color: Colors.white)),
+        backgroundColor: Color(0xFF5e78a2),
+        enableFeedback: true,
+        isExtended: true,
+        extendedPadding: EdgeInsets.symmetric(horizontal: ScreenUtil.width(30)),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
   }
 }
