@@ -77,7 +77,10 @@ class Dashboard extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () {},
-        label: Text('Create Wallet', style: TextStyle(color: Colors.white)),
+        label: Text(
+          'Create Wallet',
+          style: TextStyle(color: Colors.white, fontWeight: FontWeight.w600),
+        ),
         backgroundColor: Color(0xFF5e78a2),
         enableFeedback: true,
         isExtended: true,
