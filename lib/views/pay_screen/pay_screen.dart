@@ -21,7 +21,12 @@ class _PayScreenState extends State<PayScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: IconButton(onPressed: () {}, icon: Icon(Icons.arrow_back_ios)),
+        leading: IconButton(
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          icon: Icon(Icons.arrow_back_ios),
+        ),
         title: Text('cab'),
         leadingWidth: ScreenUtil.width(6),
         actions: [IconButton(onPressed: () {}, icon: Icon(Icons.more_vert))],
@@ -29,10 +34,7 @@ class _PayScreenState extends State<PayScreen> {
       body: Center(
         child: Column(
           children: [
-            Container(
-              margin: EdgeInsets.only(top: ScreenUtil.height(5)),
-              child: CircleAvatar(radius: ScreenUtil.width(15)),
-            ),
+            CircleAvatar(radius: ScreenUtil.width(15)),
             Container(
               margin: EdgeInsets.only(top: ScreenUtil.height(7)),
               width: ScreenUtil.width(20),
@@ -41,6 +43,11 @@ class _PayScreenState extends State<PayScreen> {
                 textAlign: TextAlign.center,
                 style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                 decoration: InputDecoration(
+                  hintText: '₹',
+                  hintStyle: TextStyle(
+                    color: Colors.grey.withValues(alpha: 0.5),
+                    fontSize: 20.0,
+                  ),
                   border: UnderlineInputBorder(
                     borderSide: BorderSide(color: Colors.black, width: 1),
                   ),
@@ -50,7 +57,7 @@ class _PayScreenState extends State<PayScreen> {
                   focusedBorder: UnderlineInputBorder(
                     borderSide: BorderSide(color: Colors.black, width: 2),
                   ),
-                  contentPadding: EdgeInsets.symmetric(vertical: 12),
+                  contentPadding: EdgeInsets.symmetric(vertical: 5),
                 ),
                 keyboardType: TextInputType.number,
               ),
