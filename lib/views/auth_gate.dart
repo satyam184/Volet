@@ -1,5 +1,4 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:wallet/views/dashBoard/dashboard.dart';
 import 'package:wallet/views/login_signup_Screen/login_signup.dart';

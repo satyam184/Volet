@@ -4,7 +4,6 @@ import 'package:logging/logging.dart';
 import 'package:wallet/components/custom_toggle_button.dart';
 import 'package:wallet/utils/images.dart';
 import 'package:wallet/utils/screen_util.dart';
-import 'package:wallet/views/login_signup_Screen/widgets/custom_text_field.dart';
 import 'package:wallet/views/login_signup_Screen/widgets/login_form.dart';
 import 'package:wallet/views/login_signup_Screen/widgets/signup_form.dart';
 
