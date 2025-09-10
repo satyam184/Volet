@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:wallet/utils/screen_util.dart';
+import 'package:wallet/views/pay_screen/upi_native_bridge/upi_native_bridge.dart';
 
 class PayScreen extends StatefulWidget {
   const PayScreen({super.key});
@@ -10,6 +11,19 @@ class PayScreen extends StatefulWidget {
 
 class _PayScreenState extends State<PayScreen> {
   final TextEditingController amount = TextEditingController();
+  String _message = "Loading...";
+
+  Future<void> _loadMessage() async {
+    final msg = await UpiNativeBridge.getHelloMessage();
+    setState(() {
+      _message = msg;
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   void dispose() {
@@ -27,7 +41,7 @@ class _PayScreenState extends State<PayScreen> {
           },
           icon: Icon(Icons.arrow_back_ios),
         ),
-        title: Text('cab'),
+        title: Text('cab: $_message'),
         leadingWidth: ScreenUtil.width(6),
         actions: [IconButton(onPressed: () {}, icon: Icon(Icons.more_vert))],
       ),
@@ -86,7 +100,9 @@ class _PayScreenState extends State<PayScreen> {
             ),
           ),
           FloatingActionButton.extended(
-            onPressed: () {},
+            onPressed: () {
+              _loadMessage();
+            },
             label: Text(
               'Pay',
               style: TextStyle(
