@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:wallet/utils/screen_util.dart';
 import 'package:wallet/views/pay_screen/upi_native_bridge/upi_native_bridge.dart';
 
@@ -11,13 +12,27 @@ class PayScreen extends StatefulWidget {
 
 class _PayScreenState extends State<PayScreen> {
   final TextEditingController amount = TextEditingController();
-  String _message = "Loading...";
+  String _status = "";
 
-  Future<void> _loadMessage() async {
-    final msg = await UpiNativeBridge.getHelloMessage();
-    setState(() {
-      _message = msg;
-    });
+  Future<void> _startPayment() async {
+    try {
+      if (amount.text.isEmpty) {
+        setState(() => _status = "Please enter an amount");
+        return;
+      }
+      final result = await UpiNativeBridge.startPayment(
+        upiId: "test@upi",
+        name: "Auto Driver",
+        note: "Ride payment",
+        amount: amount.text,
+      );
+      setState(() {
+        _status =
+            "Payment status: ${result['status']}\nRaw: ${result['rawResponse']}";
+      });
+    } on PlatformException catch (e) {
+      setState(() => _status = "Error: ${e.message}");
+    }
   }
 
   @override
@@ -41,7 +56,7 @@ class _PayScreenState extends State<PayScreen> {
           },
           icon: Icon(Icons.arrow_back_ios),
         ),
-        title: Text('cab: $_message'),
+        title: Text('cab'),
         leadingWidth: ScreenUtil.width(6),
         actions: [IconButton(onPressed: () {}, icon: Icon(Icons.more_vert))],
       ),
@@ -49,6 +64,7 @@ class _PayScreenState extends State<PayScreen> {
         child: Column(
           children: [
             CircleAvatar(radius: ScreenUtil.width(15)),
+            Text('status: $_status'),
             Container(
               margin: EdgeInsets.only(top: ScreenUtil.height(7)),
               width: ScreenUtil.width(20),
@@ -101,7 +117,7 @@ class _PayScreenState extends State<PayScreen> {
           ),
           FloatingActionButton.extended(
             onPressed: () {
-              _loadMessage();
+              _startPayment();
             },
             label: Text(
               'Pay',
